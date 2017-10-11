@@ -127,7 +127,6 @@ public class SkillCountController {
 	private void setupAlacrity() {
 		setAlacrity(new SkillPane("/img/alacrity.png"));
 		getAlacrity().setCooldown(15);
-		getAlacrity().setCooldownProgress(1f);
 		getAlacrity().setOctarine(false);
 		getAlacrity().resetCooldown();
 	}

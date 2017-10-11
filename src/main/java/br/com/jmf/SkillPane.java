@@ -27,7 +27,8 @@ public class SkillPane extends JPanel {
 	private long cooldown;
 	private float cooldownProgress;
 	private boolean octarine;
-    
+	private Timer timer;
+	
     public SkillPane(String image) {
     	this.setImage(image);
         try {
@@ -37,11 +38,10 @@ public class SkillPane extends JPanel {
         }
 
         setOpaque(false);
-
         setForeground(Color.BLUE);
         setBackground(Color.GRAY);
 
-        Timer timer = new Timer(100, new ActionListener() {
+        timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	setCooldownProgress(getCooldownProgress() + getFatorCrescimento());
@@ -143,17 +143,27 @@ public class SkillPane extends JPanel {
 	}
 
 	public void resetCooldown() {
-		setCooldownProgress(1f);
+		setCooldownProgress(getFatorCrescimento());
+		timer.start();
 	}
 
 	public float getCooldownProgress() {
-		if(cooldownProgress <= 0)
-			return 1f;
+		if(cooldownProgress <= 0) {
+			cooldownProgress = getFatorCrescimento();
+		}
 		
 		return cooldownProgress;
 	}
 
 	public void setCooldownProgress(float cooldownProgress) {
 		this.cooldownProgress = cooldownProgress;
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
 	}
 }
