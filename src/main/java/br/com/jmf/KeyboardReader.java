@@ -5,7 +5,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 public class KeyboardReader implements NativeKeyListener {
 
-	private SkillCountPane skillCountPane = new SkillCountPane();
+	private SkillCountController skillCountPane = new SkillCountController();
 	
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent key) {
@@ -23,7 +23,7 @@ public class KeyboardReader implements NativeKeyListener {
 		
 	}
 
-	public SkillCountPane getSkillCountPane() {
+	public SkillCountController getSkillCountPane() {
 		return skillCountPane;
 	}
 
