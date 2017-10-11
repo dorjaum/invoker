@@ -111,7 +111,7 @@ public class SkillPane extends JPanel {
 
         int progressWidth = (int) (width * getCooldownProgress());
         BufferedImage progressImage = chargeBar.getSubimage(0, 0, progressWidth, chargeBar.getHeight());
-        g.drawImage(progressImage, x, y, this);
+        g.drawImage(progressImage, x, y, this); 
 
         FontMetrics fm = g.getFontMetrics();
         String value = NumberFormat.getPercentInstance().format(getCooldownProgress());
