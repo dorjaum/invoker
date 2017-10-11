@@ -52,7 +52,7 @@ public class SkillCountController {
                 }
 
                 JFrame frame = new JFrame("Invoker Skills");
-                frame.setUndecorated(true);
+                //frame.setUndecorated(true);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setLayout(new GridBagLayout());
                 createSkills(frame);
@@ -72,7 +72,6 @@ public class SkillCountController {
 		case KEY_Q :
 			System.out.println("PRESSIONOU Q");
 			getAlacrity().resetCooldown();
-			getAlacrity().repaint();
 			break;
 		case KEY_W :
 			System.out.println("PRESSIONOU W");
@@ -127,8 +126,8 @@ public class SkillCountController {
 
 	private void setupAlacrity() {
 		setAlacrity(new SkillPane("/img/alacrity.png"));
-		getAlacrity().setCooldown(150);
-		getAlacrity().setCooldownProgress(0);
+		getAlacrity().setCooldown(15);
+		getAlacrity().setCooldownProgress(1f);
 		getAlacrity().setOctarine(false);
 		getAlacrity().resetCooldown();
 	}

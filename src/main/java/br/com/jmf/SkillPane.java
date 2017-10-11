@@ -21,17 +21,17 @@ public class SkillPane extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 4428499083094536647L;
-    private BufferedImage potion;
+    private BufferedImage imgSkill;
     private BufferedImage chargeBar;
     private String image;
 	private long cooldown;
-	private long cooldownProgress;
+	private float cooldownProgress;
 	private boolean octarine;
     
     public SkillPane(String image) {
     	this.setImage(image);
         try {
-            potion = ImageIO.read(getClass().getResource(image));
+            imgSkill = ImageIO.read(getClass().getResource(image));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -44,8 +44,9 @@ public class SkillPane extends JPanel {
         Timer timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	setCooldownProgress(getCooldownProgress() + 1);
-                if (getCooldownProgress() > getCooldown()) {
+            	setCooldownProgress(getCooldownProgress() + getFatorCrescimento());
+                if (getCooldownProgress() >= 1f) {
+                	setCooldownProgress(1f);
                     ((Timer) e.getSource()).stop();
                 }
                 repaint();
@@ -56,7 +57,11 @@ public class SkillPane extends JPanel {
         timer.start();
     }
 
-    @Override
+    protected float getFatorCrescimento() {
+		return 1f/getCooldown();
+	}
+
+	@Override
     public void invalidate() {
         super.invalidate();
         chargeBar = null;
@@ -73,14 +78,16 @@ public class SkillPane extends JPanel {
         if (chargeBar == null) {
             if (getWidth() > 0 && getHeight() > 0) {
                 FontMetrics fm = getFontMetrics(getFont());
+//                int height = Math.max(50, fm.getHeight() );
+//                chargeBar = new BufferedImage(getWidth() , height, BufferedImage.TYPE_INT_ARGB);
                 int height = Math.max(50, fm.getHeight() + 4);
                 chargeBar = new BufferedImage(getWidth() - 4, height, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D g2d = chargeBar.createGraphics();
                 int x = 0;
-                int y = (height - potion.getHeight()) / 2;
+                int y = (height - imgSkill.getHeight()) / 2;
                 while (x < getWidth() - 4) {
-                    g2d.drawImage(potion, x, y, this);
-                    x += potion.getWidth();
+                    g2d.drawImage(imgSkill, x, y, this);
+                    x += imgSkill.getWidth();
                 }
                 g2d.dispose();
             }
@@ -136,14 +143,17 @@ public class SkillPane extends JPanel {
 	}
 
 	public void resetCooldown() {
-		setCooldownProgress(0);
+		setCooldownProgress(1f);
 	}
 
-	public long getCooldownProgress() {
+	public float getCooldownProgress() {
+		if(cooldownProgress <= 0)
+			return 1f;
+		
 		return cooldownProgress;
 	}
 
-	public void setCooldownProgress(long cooldownProgress) {
+	public void setCooldownProgress(float cooldownProgress) {
 		this.cooldownProgress = cooldownProgress;
 	}
 }
