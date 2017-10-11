@@ -20,11 +20,16 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.jnativehook.keyboard.NativeKeyEvent;
+
 public class SkillCountPane {
 
-	public static void main(String[] args) {
-        new SkillCountPane();
-    }
+	private static final String KEY_Q = "Q";
+	private static final String KEY_W = "W";
+	private static final String KEY_E = "E";
+	private static final String KEY_R = "R";
+	private static final String KEY_D = "D";
+	private static final String KEY_F = "F";
 
     public SkillCountPane() {
         EventQueue.invokeLater(new Runnable() {
@@ -62,101 +67,28 @@ public class SkillCountPane {
         });
     }
 
-    
-    
-    public class SkillPane extends JPanel {
-
-        private float progress = 0f;
-        private BufferedImage potion;
-        private BufferedImage potionBar;
-        private String image;
-        
-        public SkillPane(String image) {
-        	this.image = image;
-            try {
-                potion = ImageIO.read(getClass().getResource(image));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            setOpaque(false);
-
-            setForeground(Color.BLUE);
-            setBackground(Color.GRAY);
-
-            Timer timer = new Timer(100, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    progress += 0.01;
-                    if (progress > 1f) {
-                        ((Timer) e.getSource()).stop();
-                    }
-                    repaint();
-                }
-            });
-            timer.setRepeats(true);
-            timer.setCoalesce(true);
-            timer.start();
-        }
-
-        @Override
-        public void invalidate() {
-            super.invalidate();
-            potionBar = null;
-        }
-
-        @Override
-        public Dimension getPreferredSize() {
-            FontMetrics fm = getFontMetrics(getFont());
-            return new Dimension(60, Math.max(50, fm.getHeight() + 4));
-        }
-
-        protected void createPotionBar() {
-
-            if (potionBar == null) {
-                if (getWidth() > 0 && getHeight() > 0) {
-                    FontMetrics fm = getFontMetrics(getFont());
-                    int height = Math.max(50, fm.getHeight() + 4);
-                    potionBar = new BufferedImage(getWidth() - 4, height, BufferedImage.TYPE_INT_ARGB);
-                    Graphics2D g2d = potionBar.createGraphics();
-                    int x = 0;
-                    int y = (height - potion.getHeight()) / 2;
-                    while (x < getWidth() - 4) {
-                        g2d.drawImage(potion, x, y, this);
-                        x += potion.getWidth();
-                    }
-                    g2d.dispose();
-                }
-            }
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            createPotionBar();
-            super.paintComponent(g);
-
-            int width = getWidth() - 4;
-            int height = getHeight() - 4;
-            int x = 2;
-            int y = 2;
-
-            g.setColor(getBackground());
-            g.fillRect(x, y, width, height);
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, width, height);
-
-            int progressWidth = (int) (width * progress);
-            BufferedImage progressImage = potionBar.getSubimage(0, 0, progressWidth, potionBar.getHeight());
-            g.drawImage(progressImage, x, y, this);
-
-            FontMetrics fm = g.getFontMetrics();
-            String value = NumberFormat.getPercentInstance().format(progress);
-            x = x + ((width - fm.stringWidth(value)) / 2);
-            y = y + ((height - fm.getHeight()) / 2);
-
-            g.setColor(Color.WHITE);
-            g.drawString(value, x, y + fm.getAscent());
-
-        }
-    }
+	public void onKeyPressed(String keyPressed) {
+		switch(keyPressed) {
+		case KEY_Q :
+			System.out.println("PRESSIONOU Q");
+			break;
+		case KEY_W :
+			System.out.println("PRESSIONOU W");
+			break;
+		case KEY_E :
+			System.out.println("PRESSIONOU E");
+			break;
+		case KEY_R :
+			System.out.println("PRESSIONOU R");
+			break;
+		case KEY_D :
+			System.out.println("PRESSIONOU D");
+			break;
+		case KEY_F :
+			System.out.println("PRESSIONOU F");
+			break;
+			default:
+		}
+		
+	}
 }
