@@ -30,7 +30,7 @@ public enum SkillType {
 		}
 	}
 	
-	public static SkillType getSkill(String[] keySequence) {
+	public static SkillType getSkill(KeyType[] keySequence) {
 		if(isWhatSkill(keySequence, ALACRITY)) {
 			return ALACRITY;
 		}
@@ -65,13 +65,13 @@ public enum SkillType {
 		return DEFAULT;
 	}
 
-	private static boolean isWhatSkill(String[] keyInserted, SkillType skillType) {
+	private static boolean isWhatSkill(KeyType[] keyInserted, SkillType skillType) {
 		ArrayList<KeyType> cloneList = (ArrayList<KeyType>) skillType.keySequenceL.clone();
 		
-		for (String key : keyInserted) {
+		for (KeyType key : keyInserted) {
 			int posicao = 0;
 			for (KeyType keyType : cloneList) {
-				if(key.equals(keyType.getKey())) {
+				if(key.equals(keyType)) {
 					cloneList.remove(posicao);
 					break;
 				}else {

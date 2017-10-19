@@ -1,5 +1,7 @@
 package br.com.jmf;
 
+import static br.com.jmf.enums.KeyType.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -22,16 +24,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 
+import br.com.jmf.enums.KeyType;
 import br.com.jmf.enums.SkillType;
 
 public class SkillCountController {
-
-	private static final String KEY_Q = "Q";
-	private static final String KEY_W = "W";
-	private static final String KEY_E = "E";
-	private static final String KEY_R = "R";
-	private static final String KEY_D = "D";
-	private static final String KEY_F = "F";
 
 	private SkillPane alacrity;
 	private SkillPane blast;
@@ -43,7 +39,7 @@ public class SkillCountController {
 	private SkillPane meteor;
 	private SkillPane sunstrike;
 	private SkillPane tornado;
-	private String[] sequence = new String[3];
+	private KeyType[] sequence = new KeyType[3];
 	private SkillPane[] dAndF = new SkillPane[2];
 	
     public SkillCountController() {
@@ -71,7 +67,7 @@ public class SkillCountController {
         });
     }
 
-    private void addKeyToSequence(String key) {
+    private void addKeyToSequence(KeyType key) {
     	sequence[2] = sequence[1];
     	sequence[1] = sequence[0];
     	sequence[0] = key;
@@ -83,31 +79,77 @@ public class SkillCountController {
     	}
     	
     	SkillType skill = SkillType.getSkill(sequence);
-    	System.out.println(skill.name());
+    	SkillPane selectedSkill = getSkillPane(skill);
     	
+    	dAndF[1] = dAndF[0];
+    	dAndF[0] = selectedSkill;
+    	System.out.println(skill.name());
     }
     
-    private void castSkillD() {
+    private SkillPane getSkillPane(SkillType skill) {
+		switch(skill) {
+		case ALACRITY:
+			return getAlacrity();
+			
+		case BLAST:
+			return getBlast();
+			
+		case COLDSNAP:
+			return getColdsnap();
+			
+		case EMP:
+			return getEmp();
+			
+		case FORGESPIRIT:
+			return getForgespirit();
+			
+		case GHOSTWALK:
+			return getGhostwalk();
+			
+		case ICEWALL:
+			return getIcewall();
+			
+		case METEOR:
+			return getMeteor();
+			
+		case SUNSTRIKE:
+			return getSunstrike();
+			
+		case TORNADO:
+			return getTornado();
+		}
+		
+		return null;
+	}
+
+	private void castSkillD() {
+    	if(dAndF[0] == null) {
+    		return;
+    	}
     	
+    	dAndF[0].putInCooldown();
     }
     
     private void castSkillF() {
+    	if(dAndF[1] == null) {
+    		return;
+    	}
     	
+    	dAndF[1].putInCooldown();
     }
     
     private boolean isInvalidSequence() {
-    	for (String string : sequence) {
-    		if(string == null || string == "") return true;
+    	for (KeyType keyType : sequence) {
+    		if(keyType == null) return true;
 		}
     	
     	return false;
     }
     
 	public void onKeyPressed(String keyPressed) {
-		switch(keyPressed) {
+		switch(KeyType.value(keyPressed)) {
 		case KEY_Q :
 			System.out.println("PRESSIONOU Q");
-			getAlacrity().resetCooldown();
 			addKeyToSequence(KEY_Q);
 			break;
 		case KEY_W :
@@ -142,35 +184,48 @@ public class SkillCountController {
 
 	private void addSkillsToFrame(JFrame frame) {
 		frame.add(getAlacrity());
-//        frame.add(getBlast());	
-//        frame.add(getColdsnap());
-//        frame.add(getEmp());
-//        frame.add(getForgespirit());
-//        frame.add(getGhostwalk());
-//        frame.add(getIcewall());
-//        frame.add(getMeteor());
-//        frame.add(getSunstrike());
-//        frame.add(getTornado());
+        frame.add(getBlast());	
+        frame.add(getColdsnap());
+        frame.add(getEmp());
+        frame.add(getForgespirit());
+        frame.add(getGhostwalk());
+        frame.add(getIcewall());
+        frame.add(getMeteor());
+        frame.add(getSunstrike());
+        frame.add(getTornado());
 	}
 
 	private void initiateSkills() {
 		setupAlacrity();
-//		setBlast(new SkillPane("/img/blast.png"));
-//		setColdsnap(new SkillPane("/img/coldsnap.png"));
-//        setEmp(new SkillPane("/img/emp.png"));
-//        setForgespirit(new SkillPane("/img/forgespirit.png"));
-//        setGhostwalk(new SkillPane("/img/ghostwalk.png"));
-//        setIcewall(new SkillPane("/img/icewall.png"));
-//        setMeteor(new SkillPane("/img/meteor.png"));
-//        setSunstrike(new SkillPane("/img/sunstrike.png"));
-//        setTornado(new SkillPane("/img/tornado.png"));
+		setupBlast();
+		setupColdsnap();
+		
+        setEmp(new SkillPane("/img/emp.png"));
+        setForgespirit(new SkillPane("/img/forgespirit.png"));
+        setGhostwalk(new SkillPane("/img/ghostwalk.png"));
+        setIcewall(new SkillPane("/img/icewall.png"));
+        setMeteor(new SkillPane("/img/meteor.png"));
+        setSunstrike(new SkillPane("/img/sunstrike.png"));
+        setTornado(new SkillPane("/img/tornado.png"));
 	}
 
 	private void setupAlacrity() {
 		setAlacrity(new SkillPane("/img/alacrity.png"));
 		getAlacrity().setCooldown(15);
 		getAlacrity().setOctarine(false);
-		getAlacrity().resetCooldown();
+//		getAlacrity().putInCooldown();
+	}
+	private void setupBlast() {
+		setBlast(new SkillPane("/img/blast.png"));
+		getBlast().setCooldown(40);
+		getBlast().setOctarine(false);
+//		getBlast().putInCooldown();
+	}
+	private void setupColdsnap() {
+		setColdsnap(new SkillPane("/img/coldsnap.png"));
+		getColdsnap().setCooldown(20);
+		getColdsnap().setOctarine(false);
+//		getColdsnap().putInCooldown();
 	}
 
 	public SkillPane getAlacrity() {

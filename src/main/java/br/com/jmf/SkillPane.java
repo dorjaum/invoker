@@ -142,7 +142,7 @@ public class SkillPane extends JPanel {
 		this.image = image;
 	}
 
-	public void resetCooldown() {
+	public void putInCooldown() {
 		setCooldownProgress(getFatorCrescimento());
 		timer.start();
 	}
