@@ -22,6 +22,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 
+import br.com.jmf.enums.SkillType;
+
 public class SkillCountController {
 
 	private static final String KEY_Q = "Q";
@@ -41,6 +43,8 @@ public class SkillCountController {
 	private SkillPane meteor;
 	private SkillPane sunstrike;
 	private SkillPane tornado;
+	private String[] sequence = new String[3];
+	private SkillPane[] dAndF = new SkillPane[2];
 	
     public SkillCountController() {
         EventQueue.invokeLater(new Runnable() {
@@ -67,26 +71,64 @@ public class SkillCountController {
         });
     }
 
+    private void addKeyToSequence(String key) {
+    	sequence[2] = sequence[1];
+    	sequence[1] = sequence[0];
+    	sequence[0] = key;
+    }
+    
+    private void summonSkillR() {
+    	if(isInvalidSequence()) {
+    		return;
+    	}
+    	
+    	SkillType skill = SkillType.getSkill(sequence);
+    	System.out.println(skill.name());
+    	
+    }
+    
+    private void castSkillD() {
+    	
+    }
+    
+    private void castSkillF() {
+    	
+    }
+    
+    private boolean isInvalidSequence() {
+    	for (String string : sequence) {
+    		if(string == null || string == "") return true;
+		}
+    	
+    	return false;
+    }
+    
 	public void onKeyPressed(String keyPressed) {
 		switch(keyPressed) {
 		case KEY_Q :
 			System.out.println("PRESSIONOU Q");
 			getAlacrity().resetCooldown();
+			addKeyToSequence(KEY_Q);
 			break;
 		case KEY_W :
 			System.out.println("PRESSIONOU W");
+			addKeyToSequence(KEY_W);
 			break;
 		case KEY_E :
 			System.out.println("PRESSIONOU E");
+			addKeyToSequence(KEY_E);
 			break;
 		case KEY_R :
 			System.out.println("PRESSIONOU R");
+			summonSkillR();
 			break;
 		case KEY_D :
 			System.out.println("PRESSIONOU D");
+			castSkillD();
 			break;
 		case KEY_F :
 			System.out.println("PRESSIONOU F");
+			castSkillF();
 			break;
 			default:
 		}
