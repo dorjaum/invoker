@@ -25,12 +25,15 @@ public class SkillPane extends JPanel {
     private BufferedImage chargeBar;
     private String image;
 	private long cooldown;
+	private boolean isOnCooldown;
 	private float cooldownProgress;
 	private boolean octarine;
 	private Timer timer;
 	
     public SkillPane(String image) {
     	this.setImage(image);
+    	this.setCooldownProgress(1);
+    	this.setOnCooldown(false);
         try {
             imgSkill = ImageIO.read(getClass().getResource(image));
         } catch (IOException ex) {
@@ -44,8 +47,10 @@ public class SkillPane extends JPanel {
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	setOnCooldown(true);
             	setCooldownProgress(getCooldownProgress() + getFatorCrescimento());
                 if (getCooldownProgress() >= 1f) {
+                	setOnCooldown(false);
                 	setCooldownProgress(1f);
                     ((Timer) e.getSource()).stop();
                 }
@@ -165,5 +170,13 @@ public class SkillPane extends JPanel {
 
 	public void setTimer(Timer timer) {
 		this.timer = timer;
+	}
+
+	public boolean isOnCooldown() {
+		return isOnCooldown;
+	}
+
+	public void setOnCooldown(boolean isOnCooldown) {
+		this.isOnCooldown = isOnCooldown;
 	}
 }

@@ -22,6 +22,7 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.jcp.xml.dsig.internal.dom.ApacheNodeSetData;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
 import br.com.jmf.enums.KeyType;
@@ -29,6 +30,9 @@ import br.com.jmf.enums.SkillType;
 
 public class SkillCountController {
 
+	private static final String IMG_COLDSNAP = "/img/coldsnap.png";
+	private static final String IMG_ALACRITY = "/img/alacrity.png";
+	private static final String IMG_BLAST = "/img/blast.png";
 	private SkillPane alacrity;
 	private SkillPane blast;
 	private SkillPane coldsnap;
@@ -52,7 +56,7 @@ public class SkillCountController {
                 }
 
                 JFrame frame = new JFrame("Invoker Skills");
-                //frame.setUndecorated(true);
+                frame.setUndecorated(true);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setLayout(new GridBagLayout());
                 createSkills(frame);
@@ -122,20 +126,16 @@ public class SkillCountController {
 		return null;
 	}
 
-	private void castSkillD() {
-    	if(dAndF[0] == null) {
+	private void castSkill(SkillPane skill) {
+    	if(skill == null) {
     		return;
     	}
     	
-    	dAndF[0].putInCooldown();
-    }
-    
-    private void castSkillF() {
-    	if(dAndF[1] == null) {
+    	if(skill.isOnCooldown()) {
     		return;
     	}
     	
-    	dAndF[1].putInCooldown();
+    	skill.putInCooldown();
     }
     
     private boolean isInvalidSequence() {
@@ -166,13 +166,12 @@ public class SkillCountController {
 			break;
 		case KEY_D :
 			System.out.println("PRESSIONOU D");
-			castSkillD();
+			castSkill(dAndF[0]);
 			break;
 		case KEY_F :
 			System.out.println("PRESSIONOU F");
-			castSkillF();
+			castSkill(dAndF[1]);
 			break;
-			default:
 		}
 		
 	}
@@ -210,19 +209,19 @@ public class SkillCountController {
 	}
 
 	private void setupAlacrity() {
-		setAlacrity(new SkillPane("/img/alacrity.png"));
+		setAlacrity(new SkillPane(IMG_ALACRITY));
 		getAlacrity().setCooldown(15);
 		getAlacrity().setOctarine(false);
 //		getAlacrity().putInCooldown();
 	}
 	private void setupBlast() {
-		setBlast(new SkillPane("/img/blast.png"));
+		setBlast(new SkillPane(IMG_BLAST));
 		getBlast().setCooldown(40);
 		getBlast().setOctarine(false);
 //		getBlast().putInCooldown();
 	}
 	private void setupColdsnap() {
-		setColdsnap(new SkillPane("/img/coldsnap.png"));
+		setColdsnap(new SkillPane(IMG_COLDSNAP));
 		getColdsnap().setCooldown(20);
 		getColdsnap().setOctarine(false);
 //		getColdsnap().putInCooldown();
