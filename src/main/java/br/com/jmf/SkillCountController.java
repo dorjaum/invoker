@@ -47,8 +47,11 @@ public class SkillCountController {
             public void run() {
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                }
+                } catch (ClassNotFoundException ex) {
+                } catch (InstantiationException ex) {
+                } catch (IllegalAccessException ex) {
+                } catch (UnsupportedLookAndFeelException ex) {
+                } 
 
                 JFrame frame = new JFrame(INVOKER_SKILLS);
                 frame.setUndecorated(true);
