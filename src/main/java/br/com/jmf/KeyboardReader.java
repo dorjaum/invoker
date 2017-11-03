@@ -19,8 +19,7 @@ public class KeyboardReader implements NativeKeyListener {
 
 	@Override
 	public void nativeKeyTyped(NativeKeyEvent arg0) {
-		System.out.println("typed > " + NativeKeyEvent.getKeyText(arg0.getKeyCode()));
-		
+
 	}
 
 	public SkillCountController getSkillCountPane() {

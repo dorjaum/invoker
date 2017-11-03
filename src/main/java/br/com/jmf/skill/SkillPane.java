@@ -1,4 +1,4 @@
-package br.com.jmf;
+package br.com.jmf.skill;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,11 +15,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class SkillPane extends JPanel {
+public abstract class SkillPane extends JPanel {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 4428499083094536647L;
     private BufferedImage imgSkill;
     private BufferedImage chargeBar;
@@ -30,21 +27,24 @@ public class SkillPane extends JPanel {
 	private boolean octarine;
 	private Timer timer;
 	
-    public SkillPane(String image) {
-    	this.setImage(image);
-    	this.setCooldownProgress(1);
+	public SkillPane(String image) {
+		this.setCooldownProgress(1);
     	this.setOnCooldown(false);
-        try {
-            imgSkill = ImageIO.read(getClass().getResource(image));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
+    	this.setOctarine(false);
+    	
+        readImg(image);
         setOpaque(false);
         setForeground(Color.BLUE);
         setBackground(Color.GRAY);
-
-        timer = new Timer(1000, new ActionListener() {
+        setupTimer();
+	}
+	
+	public SkillPane() {
+		
+	}
+	
+	private void setupTimer() {
+		timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	setOnCooldown(true);
@@ -60,7 +60,15 @@ public class SkillPane extends JPanel {
         timer.setRepeats(true);
         timer.setCoalesce(true);
         timer.start();
-    }
+	}
+
+	private void readImg(String image) {
+		try {
+            imgSkill = ImageIO.read(getClass().getResource(image));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+	}
 
     protected float getFatorCrescimento() {
 		return 1f/getCooldown();
