@@ -23,6 +23,7 @@ import br.com.jmf.skill.SkillPane;
 import br.com.jmf.skill.SkillSunstrike;
 import br.com.jmf.skill.SkillTornado;
 import br.com.jmf.type.KeyType;
+import br.com.jmf.type.MouseType;
 import br.com.jmf.type.SkillType;
 
 public class SkillCountController {
@@ -187,9 +188,27 @@ public class SkillCountController {
 	}
 
 	public void onMouseClicked(int button) {
-		
+		switch(MouseType.getValue(button)) {
+		case LEFT_BUTTON:
+			castSelectedSkill();
+			break;
+			
+		case RIGHT_BUTTON:
+			clearSelection();
+			break;
+		}
 	}
 	
+	private void clearSelection() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void castSelectedSkill() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void createSkills(JFrame frame) {
 		initiateSkills();
         addSkillsToFrame(frame);

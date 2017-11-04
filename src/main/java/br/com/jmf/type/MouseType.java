@@ -10,5 +10,15 @@ public enum MouseType {
 	MouseType(int button){
 		this.button = button;
 	}
+
+	public static MouseType getValue(int button) {
+		for (MouseType mouseType : values()) {
+			if(mouseType.button == button) {
+				return mouseType;
+			}
+		}
+		
+		return null;
+	}
 	
 }
