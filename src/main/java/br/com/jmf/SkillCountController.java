@@ -1,8 +1,8 @@
 package br.com.jmf;
 
-import static br.com.jmf.enums.KeyType.KEY_E;
-import static br.com.jmf.enums.KeyType.KEY_Q;
-import static br.com.jmf.enums.KeyType.KEY_W;
+import static br.com.jmf.type.KeyType.KEY_E;
+import static br.com.jmf.type.KeyType.KEY_Q;
+import static br.com.jmf.type.KeyType.KEY_W;
 
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import br.com.jmf.enums.KeyType;
-import br.com.jmf.enums.SkillType;
 import br.com.jmf.skill.SkillAlacrity;
 import br.com.jmf.skill.SkillBlast;
 import br.com.jmf.skill.SkillColdsnap;
@@ -24,6 +22,8 @@ import br.com.jmf.skill.SkillMeteor;
 import br.com.jmf.skill.SkillPane;
 import br.com.jmf.skill.SkillSunstrike;
 import br.com.jmf.skill.SkillTornado;
+import br.com.jmf.type.KeyType;
+import br.com.jmf.type.SkillType;
 
 public class SkillCountController {
 	
@@ -40,8 +40,17 @@ public class SkillCountController {
 	private SkillPane tornado;
 	private KeyType[] sequence = new KeyType[3];
 	private SkillPane[] dAndF = new SkillPane[2];
+	private static SkillCountController instance;
 	
-    public SkillCountController() {
+	public static SkillCountController getInstance() {
+		if(instance == null) {
+			instance = new SkillCountController();
+		}
+		
+		return instance;
+	}
+	
+    private SkillCountController() {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -145,35 +154,39 @@ public class SkillCountController {
 	public void onKeyPressed(String keyPressed) {
 		switch(KeyType.value(keyPressed)) {
 		case KEY_Q :
-			System.out.println("PRESSIONOU Q");
+			System.out.println("PRESSED Q");
 			addKeyToSequence(KEY_Q);
 			break;
 			
 		case KEY_W :
-			System.out.println("PRESSIONOU W");
+			System.out.println("PRESSED W");
 			addKeyToSequence(KEY_W);
 			break;
 			
 		case KEY_E :
-			System.out.println("PRESSIONOU E");
+			System.out.println("PRESSED E");
 			addKeyToSequence(KEY_E);
 			break;
 			
 		case KEY_R :
-			System.out.println("PRESSIONOU R");
+			System.out.println("PRESSED R");
 			summonSkillR();
 			break;
 			
 		case KEY_D :
-			System.out.println("PRESSIONOU D");
+			System.out.println("PRESSED D");
 			castSkill(dAndF[0]);
 			break;
 			
 		case KEY_F :
-			System.out.println("PRESSIONOU F");
+			System.out.println("PRESSED F");
 			castSkill(dAndF[1]);
 			break;
 		}
+		
+	}
+
+	public void onMouseClicked(int button) {
 		
 	}
 	
@@ -288,4 +301,5 @@ public class SkillCountController {
 	public void setTornado(SkillPane tornado) {
 		this.tornado = tornado;
 	}
+
 }

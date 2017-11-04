@@ -42,7 +42,7 @@ public abstract class SkillPane extends JPanel {
 	public SkillPane() {
 		
 	}
-	
+
 	private void setupTimer() {
 		timer = new Timer(1000, new ActionListener() {
             @Override

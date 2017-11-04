@@ -6,7 +6,7 @@ public class SkillAlacrity extends SkillPane{
 	
 	public SkillAlacrity() {
 		super(IMG_ALACRITY);
-		this.setCooldown(15);
+		this.setCooldown(17);
 	}
 
 }

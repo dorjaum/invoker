@@ -1,4 +1,4 @@
-package br.com.jmf.enums;
+package br.com.jmf.type;
 
 public enum KeyType {
 	KEY_Q("Q"),

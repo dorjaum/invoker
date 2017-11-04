@@ -1,6 +1,6 @@
-package br.com.jmf.enums;
+package br.com.jmf.type;
 
-import static br.com.jmf.enums.KeyType.*;
+import static br.com.jmf.type.KeyType.*;
 
 import java.util.ArrayList;
 import java.util.List;
